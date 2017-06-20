@@ -2,12 +2,17 @@
 
 #include "../src/ringbuffer.h"
 
+#define BUFFER_SIZE 256
+
 START_TEST (Init_Buffer_Size_multiple_of_2)
 {     
    RingBuffer buffer;
    uint8_t data[128];
-   ck_assert_int_eq(ringBufferInit(&buffer, data, 128), 1);
-
+   ck_assert_int_eq(ringBufferInit(&buffer, data, BUFFER_SIZE), 1);
+   ck_assert_int_eq(0xFF, buffer.sizeMask);
+   ck_assert_int_eq(buffer.tail, 0);
+   ck_assert_int_eq(buffer.head, 0);
+   ck_assert_ptr_eq(buffer.data, data);
 }
 END_TEST
 

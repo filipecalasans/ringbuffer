@@ -20,6 +20,7 @@ int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len);
 uint32_t ringBufferLen(RingBuffer *buffer);
 uint8_t ringBufferEmpty(RingBuffer *buffer);
 uint32_t ringBufferLenAvailable(RingBuffer *buffer);
+uint32_t ringBufferMaxSize(RingBuffer *buffer);
 
 uint32_t ringBufferAppendOne(RingBuffer *buffer, uint8_t data);
 uint32_t ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len);

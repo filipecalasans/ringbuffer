@@ -3,6 +3,6 @@
 
 #include <check.h>
 
-Suite * money_suite(void);
+Suite * init_buffer_suite(void);
 
 #endif
