@@ -15,7 +15,7 @@ typedef struct {
 extern  "C" {
 #endif
 
-void ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len);
+int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len);
 
 uint32_t ringBufferLen(RingBuffer *buffer);
 uint8_t ringBufferEmpty(RingBuffer *buffer);

@@ -2,15 +2,17 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-void ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len) {
-   if(len%2 != 0) {
-      printf("Buffer len%%2 != 0\n");
-      exit(0);
+int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len) {
+   if(!(len && !(len & (len - 1)))) {
+      return 0;
    }
+
    buffer->tail = 0;
    buffer->head = 0;
    buffer->sizeMask = len-1;
+   return 1;
 }
 
 uint32_t ringBufferLen(RingBuffer *buffer) {
@@ -22,11 +24,11 @@ uint8_t ringBufferEmpty(RingBuffer *buffer) {
 }
 
 uint32_t ringBufferLenAvailable(RingBuffer *buffer){
-
+   return buffer->sizeMask - ringBufferLen(buffer) + 1;
 }
 
 uint32_t ringBufferAppendOne(RingBuffer *buffer, uint8_t data){
-   data[buffer->head] = data;
+   buffer->data[buffer->head] = data;
    buffer->head = (buffer->head + 1) & buffer->sizeMask;
 }
 

@@ -1,7 +1,5 @@
 
 #LIB_DIR=
-#LIBS=
-
 #CFLAGS=-I$(INCLUDE_DIR)
 #LDFLAGS=-L$(LIB_DIR) $(LIBS)
 
@@ -10,6 +8,9 @@ CCOMPILER=gcc
 
 all: ringbuffer
 
+test: $(CSOURCES:.c=.o)
+	+$(MAKE) -C tests
+	
 ringbuffer: $(CSOURCES:.c=.o)
 	$(CCOMPILER) -o $@ $^ $(LDFLAGS)
 
@@ -18,6 +19,7 @@ ringbuffer: $(CSOURCES:.c=.o)
 
 clean:
 	-rm -f *.o ringbuffer *~
+	-rm -f tests/*.o tests *~
 
 remade:
 	$(MAKE) clean
