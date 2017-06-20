@@ -8,11 +8,14 @@ typedef struct {
    uint32_t tail;
    uint32_t head;
    uint32_t sizeMask;
-   uint32_t size;
    uint8_t *data;
 }RingBuffer;
 
-void initRingBuffer(RingBuffer *buffer, uint8_t *data, uint32_t len);
+#ifdef  __cplusplus
+extern  "C" {
+#endif
+
+void ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len);
 
 uint32_t ringBufferLen(RingBuffer *buffer);
 uint8_t ringBufferEmpty(RingBuffer *buffer);
@@ -29,5 +32,9 @@ uint32_t ringBufferPeakMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
 
 uint32_t ringBufferDiscardMultiple(RingBuffer *buffer, uint32_t len);
 uint32_t ringBufferClear(RingBuffer *buffer);
+
+#ifdef  __cplusplus
+      }
+#endif
 
 #endif
