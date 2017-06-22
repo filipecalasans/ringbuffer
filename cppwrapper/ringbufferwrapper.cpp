@@ -8,13 +8,16 @@ RingBufferWrapper::RingBufferWrapper(uint32_t size) :
    valid = ringBufferInit(&buffer, data, size);
 
    if(!valid) { 
-      delete[] data; 
+      delete[] data;
+      buffer.data = NULL;
    }
 }
 
 RingBufferWrapper::~RingBufferWrapper()
-{
-   delete buffer.data;
+{  
+   if(buffer.data) {
+      delete[] buffer.data;
+   }
 }
 
 bool RingBufferWrapper::isValid() 
