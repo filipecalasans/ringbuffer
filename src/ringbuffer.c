@@ -36,12 +36,12 @@ uint32_t ringBufferMaxSize(RingBuffer *buffer) {
    return buffer->sizeMask;
 }
 
-uint32_t ringBufferAppendOne(RingBuffer *buffer, uint8_t data){
+void ringBufferAppendOne(RingBuffer *buffer, uint8_t data){
    buffer->data[buffer->tail] = data;
    buffer->tail = (buffer->tail + 1) & buffer->sizeMask;
 }
 
-uint32_t ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len){
+void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len){
    if(buffer->tail + len > buffer->sizeMask) {
       uint32_t lenToTheEnd = buffer->sizeMask - buffer->tail + 1;
       uint32_t lenFromBegin = len - lenToTheEnd;

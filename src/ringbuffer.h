@@ -4,16 +4,16 @@
 #include <stdint.h>
 #include <stdio.h>
 
+#ifdef  __cplusplus
+extern  "C" {
+#endif
+
 typedef struct {
    uint32_t tail;
    uint32_t head;
    uint32_t sizeMask;
    uint8_t *data;
 }RingBuffer;
-
-#ifdef  __cplusplus
-extern  "C" {
-#endif
 
 int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len);
 
@@ -22,8 +22,8 @@ uint8_t ringBufferEmpty(RingBuffer *buffer);
 uint32_t ringBufferLenAvailable(RingBuffer *buffer);
 uint32_t ringBufferMaxSize(RingBuffer *buffer);
 
-uint32_t ringBufferAppendOne(RingBuffer *buffer, uint8_t data);
-uint32_t ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len);
+void ringBufferAppendOne(RingBuffer *buffer, uint8_t data);
+void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len);
 
 uint8_t ringBufferPeakOne(RingBuffer *buffer);
 uint8_t ringBufferGetOne(RingBuffer *buffer);
