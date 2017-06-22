@@ -1,4 +1,4 @@
-#include "initBufferTest.h"
+#include "appendBufferTest.h"
 
 #include "../src/ringbuffer.h"
 

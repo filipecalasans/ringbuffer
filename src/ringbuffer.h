@@ -28,11 +28,11 @@ uint32_t ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t le
 uint8_t ringBufferPeakOne(RingBuffer *buffer);
 uint8_t ringBufferGetOne(RingBuffer *buffer);
 
-uint32_t ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
-uint32_t ringBufferPeakMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
+void ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
+void ringBufferPeakMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
 
-uint32_t ringBufferDiscardMultiple(RingBuffer *buffer, uint32_t len);
-uint32_t ringBufferClear(RingBuffer *buffer);
+void ringBufferDiscardMultiple(RingBuffer *buffer, uint32_t len);
+void ringBufferClear(RingBuffer *buffer);
 
 #ifdef  __cplusplus
       }

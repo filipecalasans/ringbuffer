@@ -5,6 +5,7 @@
 
 #include "initBufferTest.h"
 #include "appendBufferTest.h"
+#include "getBufferTest.h"
 
 int main(void)
 {
@@ -16,7 +17,7 @@ int main(void)
     sr = srunner_create(s);
     
     srunner_add_suite(sr, append_buffer_suite());
-    
+    srunner_add_suite(sr, get_buffer_suite());
 
     srunner_run_all(sr, CK_NORMAL);
     number_failed = srunner_ntests_failed(sr);
