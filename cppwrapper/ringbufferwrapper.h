@@ -1,28 +1,7 @@
 #ifndef __RING_BUFFER_WRAPPER_H__
 #define __RING_BUFFER_WRAPPER_H__
 
-
-// int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len);
-
-// uint32_t ringBufferLen(RingBuffer *buffer);
-// uint8_t ringBufferEmpty(RingBuffer *buffer);
-// uint32_t ringBufferLenAvailable(RingBuffer *buffer);
-// uint32_t ringBufferMaxSize(RingBuffer *buffer);
-
-// uint32_t ringBufferAppendOne(RingBuffer *buffer, uint8_t data);
-// uint32_t ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len);
-
-// uint8_t ringBufferPeakOne(RingBuffer *buffer);
-// uint8_t ringBufferGetOne(RingBuffer *buffer);
-
-// void ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
-// void ringBufferPeakMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
-
-// void ringBufferDiscardMultiple(RingBuffer *buffer, uint32_t len);
-// void ringBufferClear(RingBuffer *buffer);
-
 #include <stdint.h>
-
 #include "../src/ringbuffer.h"
 
 class RingBufferWrapper {

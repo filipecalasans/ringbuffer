@@ -87,6 +87,10 @@ START_TEST (Append_Multiple_Elements_No_Round)
    }
 
 }
+   /* Simulate Insertions and removals */
+   buffer.tail = buffer.head = BUFFER_SIZE/2;
+   /* Simulate Insertions and removals */
+   buffer.tail = buffer.head = BUFFER_SIZE/2;
 END_TEST
 
 
