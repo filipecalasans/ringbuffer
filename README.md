@@ -112,7 +112,7 @@ The C library was unit tested using [libcheck](https://libcheck.github.io/check/
 $ apt-get install check
 ```
 
-The Unit Test modules are provided in the folder *tests*; to compile an run the tests, you can execute following sequence of commands inside the directory **tests**:
+The Unit Test modules are provided in the folder *tests*. To compile an run the tests, you can execute the following sequence of commands inside the directory **tests**:
 
 ```sh
 $ make && ./test
