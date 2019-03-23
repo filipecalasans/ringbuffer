@@ -85,12 +85,13 @@ START_TEST (Append_Multiple_Elements_No_Round)
    for(uint8_t i=0; i<BUFFER_SIZE-1; i++) {
        ck_assert_int_eq(data[i], elements[i]);
    }
+   /* Simulate Insertions and removals */
+   buffer.tail = buffer.head = BUFFER_SIZE/2;
+   /* Simulate Insertions and removals */
+   buffer.tail = buffer.head = BUFFER_SIZE/2;
 
 }
-   /* Simulate Insertions and removals */
-   buffer.tail = buffer.head = BUFFER_SIZE/2;
-   /* Simulate Insertions and removals */
-   buffer.tail = buffer.head = BUFFER_SIZE/2;
+
 END_TEST
 
 

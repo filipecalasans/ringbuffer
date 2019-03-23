@@ -1,8 +1,10 @@
 #ifndef __RING_BUFFER_H_
 #define __RING_BUFFER_H_
 
+// Uncomment if your platform does not have memcopy implementation.
+// #define NO_MEM_COPY
+
 #include <stdint.h>
-#include <stdio.h>
 
 #ifdef  __cplusplus
 extern  "C" {

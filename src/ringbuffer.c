@@ -1,8 +1,40 @@
 #include "ringbuffer.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef NO_MEM_COPY
 #include <string.h>
+#else
+#ifndef memcpy
+static void *memcpy(void *dst, const void *src, uint32_t n)
+{  
+   uint32_t i = 0;
+   /* Verify if n, and the pointers are word aligned.
+    * If it's word aligned copy by word.
+    */
+   if((uintptr_t)dst % sizeof(uint32_t) == 0 &&
+      (uintptr_t)src % sizeof(uint32_t) == 0 &&
+      n % sizeof(uint32_t) == 0) {
+
+      uint32_t *d = dst;
+      const uint32_t *s = src;
+
+      for (i=0; i<n/sizeof(uint32_t); i++) {
+         d[i] = s[i];
+      }
+   }
+   else {
+         
+      char *d = dst;
+      const char *s = src;
+
+      for (i=0; i<n; i++) {
+         d[i] = s[i];
+      }
+   }
+
+   return dst;
+}
+#endif
+#endif
 
 int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len) {
    if(!(len && !(len & (len - 1)))) {

@@ -2,8 +2,7 @@
 
 RingBufferWrapper::RingBufferWrapper(uint32_t size) :
    valid(false)
-{
-   
+{ 
    uint8_t *data = new uint8_t[size];
    valid = ringBufferInit(&buffer, data, size);
 
@@ -67,13 +66,13 @@ uint32_t RingBufferWrapper::appendMultiple(uint8_t *data, uint32_t len)
    return len;
 }
 
-uint8_t  RingBufferWrapper::peakOne() 
+uint8_t RingBufferWrapper::peakOne() 
 {
    if(!length()) { return 0; }
    return ringBufferPeakOne(&buffer);
 }
 
-uint8_t  RingBufferWrapper::getOne() 
+uint8_t RingBufferWrapper::getOne() 
 {
    if(!length()) { return 0; }
    return ringBufferGetOne(&buffer);
