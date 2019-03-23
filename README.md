@@ -4,7 +4,7 @@ Static size Ring Buffer implementation in C with minimal dependencies and tailor
 
 This library privileges performance over safety, therefore we do not make safety checks before manipulating the buffer, nor we raise exceptions in the C++ wrappers. This library is useful for applications such as packet queue, I/O queue, embedded applications.
 
-# Exmaples
+# Exampels
 
 You can include the files **ringbuffer.{c,h}** into your project and you should be ready to go.
 
@@ -49,12 +49,11 @@ use statically allocated memory as internal data buffer, as we show in the examp
 However, you are not doomed to this approach. The library is flexible to allow
 you to use dynamically allocated memory.
 
-# Using Ring Buffer in C++
+## Using Ring Buffer in C++
 
 You can find the **RingBufferWrapper** implementation in the folder **cppwrappers**. It provides a C++ class wrappers for the C implementation. For now, the wrapper
 does not allow custom allocators, or statically allocated memories. However, we intend to enhance the wrapper in the future. Moreover, the class also provides some boundary checkes before the insertion/remove/access operation. 
 
-## Example
 
 ```C++
 #include "ringbufferwrapper.h"
