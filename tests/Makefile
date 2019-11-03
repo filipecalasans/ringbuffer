@@ -9,25 +9,27 @@ CSOURCES += $(wildcard ../src/*.c)
 
 CCOMPILER=gcc
 
+BIN=test
+
 all: test run-test
 
-test: $(CSOURCES:.c=.o)
+$(BIN): $(CSOURCES:.c=.o)
 	$(CCOMPILER) -o $@ $^ $(LDFLAGS)
 	
 %.o: %.c
 	$(CCOMPILER) -c $< $(CFLAGS) -o $(OBJDIR)/$@
 
 clean:
-	-rm -f *.o tests *~
+	-rm -f *.o $(BIN) *~
 
 remade:
 	$(MAKE) clean
 	$(MAKE)
 
 run-test:
-	./test
+	./$(BIN)
 
 -include $(CSOURCES:.c:.d)
 
 %.d: %.d
-	gcc $< -MM -MT '$*.o $*.d' -MD $(CFLAGS)
+	$(CCOMPILER) $< -MM -MT '$*.o $*.d' -MD $(CFLAGS)
