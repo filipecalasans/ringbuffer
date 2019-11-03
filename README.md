@@ -104,7 +104,7 @@ get them until the buffer is empty.
 
 # Tests
 
-The C library was unit tested using [libcheck](https://libcheck.github.io/check/web/install.html). If you are using Ubuntu you can install the library as bellow:
+The C library was unit tested using [libcheck](https://libcheck.github.io/check/web/install.html). If you are using Ubuntu you can install the library as below:
 
 ### Ubuntu 
 
