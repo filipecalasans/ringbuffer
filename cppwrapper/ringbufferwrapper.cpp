@@ -1,5 +1,9 @@
 #include "ringbufferwrapper.h"
 
+#ifndef NULL
+#define NULL 0;
+#endif
+
 RingBufferWrapper::RingBufferWrapper(uint32_t size) :
    valid(false)
 { 
@@ -66,10 +70,10 @@ uint32_t RingBufferWrapper::appendMultiple(uint8_t *data, uint32_t len)
    return len;
 }
 
-uint8_t RingBufferWrapper::peakOne() 
+uint8_t RingBufferWrapper::peekOne() 
 {
    if(!length()) { return 0; }
-   return ringBufferPeakOne(&buffer);
+   return ringBufferPeekOne(&buffer);
 }
 
 uint8_t RingBufferWrapper::getOne() 
@@ -91,7 +95,7 @@ uint32_t RingBufferWrapper::getMultiple(uint8_t *dst, uint32_t len)
    return len; 
 }
 
-uint32_t RingBufferWrapper::peakMultiple(uint8_t *dst, uint32_t len) 
+uint32_t RingBufferWrapper::peekMultiple(uint8_t *dst, uint32_t len) 
 {
    uint32_t currentLen = length();
    if(currentLen == 0) { return 0; }
@@ -100,7 +104,7 @@ uint32_t RingBufferWrapper::peakMultiple(uint8_t *dst, uint32_t len)
       len = currentLen;
    }
 
-   ringBufferPeakMultiple(&buffer, dst, len);
+   ringBufferPeekMultiple(&buffer, dst, len);
    return len; 
 }
 

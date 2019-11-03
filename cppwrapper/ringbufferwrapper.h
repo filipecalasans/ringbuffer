@@ -24,11 +24,11 @@ public:
    bool appendOne(uint8_t data);
    uint32_t appendMultiple(uint8_t *data, uint32_t len);
 
-   uint8_t peakOne();
+   uint8_t peekOne();
    uint8_t getOne();
 
    uint32_t getMultiple(uint8_t *dst, uint32_t len);
-   uint32_t peakMultiple(uint8_t *dst, uint32_t len);
+   uint32_t peekMultiple(uint8_t *dst, uint32_t len);
 
    uint32_t discardMultiple(uint32_t len);
    void clear();   

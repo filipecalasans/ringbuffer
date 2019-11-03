@@ -10,7 +10,7 @@ CSOURCES += $(wildcard *.cpp)
 
 CCOMPILER=g++
 
-all: wrapper
+all: wrapper run-test
 
 wrapper: $(CSOURCES:.c=.o)
 	$(CCOMPILER) -o $@ $^ $(LDFLAGS)
@@ -25,6 +25,9 @@ clean:
 remade:
 	$(MAKE) clean
 	$(MAKE)
+
+run-test:
+	./wrapper 
 
 -include $(CSOURCES:.c:.d) $(CSOURCES:.cpp:.d)
 

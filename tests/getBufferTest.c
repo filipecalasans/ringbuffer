@@ -4,7 +4,7 @@
 
 #define BUFFER_SIZE 128
 
-START_TEST (Peak_One_After_Multiple_Insertions)
+START_TEST (Peek_One_After_Multiple_Insertions)
 {     
    RingBuffer buffer;
    uint8_t data[BUFFER_SIZE] = {0xFF};
@@ -24,7 +24,7 @@ START_TEST (Peak_One_After_Multiple_Insertions)
         ringBufferAppendOne(&buffer, elements[i]);
         ck_assert_int_eq(ringBufferLen(&buffer), i+1);
         ck_assert_int_eq(ringBufferEmpty(&buffer), 0);
-        ck_assert_int_eq(ringBufferPeakOne(&buffer), elements[0]);
+        ck_assert_int_eq(ringBufferPeekOne(&buffer), elements[0]);
    }
 }
 END_TEST
@@ -139,7 +139,7 @@ Suite * get_buffer_suite(void)
     /* Core test case */
     tc_core = tcase_create("Core");
 
-    tcase_add_test(tc_core, Peak_One_After_Multiple_Insertions);
+    tcase_add_test(tc_core, Peek_One_After_Multiple_Insertions);
     tcase_add_test(tc_core, Get_One_After_Multiple_Insertions);
     tcase_add_test(tc_core, Get_Multiple_After_Multiple_Insertions_No_Round);
     tcase_add_test(tc_core, Get_Multiple_After_Multiple_Insertions_Round);

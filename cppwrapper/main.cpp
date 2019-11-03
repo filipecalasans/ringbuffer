@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
    }
 
    uint32_t len = ringBuffer.appendMultiple(values, ADD_SIZE);
-   std::cout << "Inserted: " << len << ", Tryied: " 
+   std::cout << "Inserted: " << len << ", Tried: " 
              << ADD_SIZE << ", Len Read: " << ringBuffer.length() 
              << " Len Available: " << ringBuffer.lengthAvailable() << "\n";
 

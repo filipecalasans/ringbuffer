@@ -9,7 +9,7 @@ CSOURCES += $(wildcard ../src/*.c)
 
 CCOMPILER=gcc
 
-all: test
+all: test run-test
 
 test: $(CSOURCES:.c=.o)
 	$(CCOMPILER) -o $@ $^ $(LDFLAGS)
@@ -23,6 +23,9 @@ clean:
 remade:
 	$(MAKE) clean
 	$(MAKE)
+
+run-test:
+	./test
 
 -include $(CSOURCES:.c:.d)
 

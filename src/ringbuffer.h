@@ -27,11 +27,11 @@ uint32_t ringBufferMaxSize(RingBuffer *buffer);
 void ringBufferAppendOne(RingBuffer *buffer, uint8_t data);
 void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len);
 
-uint8_t ringBufferPeakOne(RingBuffer *buffer);
+uint8_t ringBufferPeekOne(RingBuffer *buffer);
 uint8_t ringBufferGetOne(RingBuffer *buffer);
 
 void ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
-void ringBufferPeakMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
+void ringBufferPeekMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
 
 void ringBufferDiscardMultiple(RingBuffer *buffer, uint32_t len);
 void ringBufferClear(RingBuffer *buffer);

@@ -86,7 +86,7 @@ void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len){
    buffer->tail = (buffer->tail + len) & buffer->sizeMask;
 }
 
-uint8_t ringBufferPeakOne(RingBuffer *buffer){
+uint8_t ringBufferPeekOne(RingBuffer *buffer){
    return buffer->data[buffer->head];
 }
 
@@ -97,11 +97,11 @@ uint8_t ringBufferGetOne(RingBuffer *buffer){
 }
 
 void ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len) {
-   ringBufferPeakMultiple(buffer, dst, len);
+   ringBufferPeekMultiple(buffer, dst, len);
    buffer->head = (buffer->head + len) & buffer->sizeMask;
 }
 
-void ringBufferPeakMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len){
+void ringBufferPeekMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len){
    if(buffer->head + len > buffer->sizeMask) {
       uint32_t lenToTheEnd = buffer->sizeMask - buffer->head + 1;
       uint32_t lenFromBegin = len - lenToTheEnd;
