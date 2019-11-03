@@ -23,15 +23,15 @@ You can include the files **ringbuffer.{c,h}** into your project and you should 
       RingBuffer buffer;
       ringBufferInit(&buffer, data, BUFFER_SIZE);
 
-      # Append multiples bytes at one time
+      // Append multiples bytes at one time
       uint8_t new_elem[3] = {1, 10, 20};
       ringBufferAppendMultiple(&buffer, new_elem, 3);
 
-      # You can inspect multiples bytes without removing 
+      // You can inspect multiples bytes without removing 
       uint8_t inspect[2];
       ringBufferPeakMultiple(&buffer, inspect, 2);
 
-      #You can discard multiples
+      // You can discard multiples
       ringBufferDiscardMultiple(&buffer, 2);
       
       uint32_t freeSpace = ringBufferLenAvailable(&buffer)l
