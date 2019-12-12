@@ -29,7 +29,7 @@ You can include the files **ringbuffer.{c,h}** into your project and you should 
 
       // You can inspect multiples bytes without removing 
       uint8_t inspect[2];
-      ringBufferPeakMultiple(&buffer, inspect, 2);
+      ringBufferPeekMultiple(&buffer, inspect, 2);
 
       // You can discard multiples
       ringBufferDiscardMultiple(&buffer, 2);
@@ -43,7 +43,7 @@ You can include the files **ringbuffer.{c,h}** into your project and you should 
 
 ```
 
-If you are working in a memory restrained environment, you may want to 
+If you are working in a memory constrained environment, you may want to 
 use statically allocated memory as internal data buffer, as we show in the example above.
 
 However, you are not doomed to this approach. The library is flexible to allow
@@ -51,8 +51,7 @@ you to use dynamically allocated memory.
 
 ## Using Ring Buffer in C++
 
-You can find the **RingBufferWrapper** implementation in the folder **cppwrappers**. It provides a C++ class wrappers for the C implementation. For now, the wrapper
-does not allow custom allocators, or statically allocated memories. However, we intend to enhance the wrapper in the future. Moreover, the class also provides some boundary checkes before the insertion/remove/access operation. 
+You can find the **RingBufferWrapper** implementation in the folder **cppwrappers**. It provides a C++ class wrappers for the C implementation.
 
 
 ```C++
@@ -100,7 +99,7 @@ int main(int argc, char *argv[]) {
 ```
 
 The example above creates a RingBuffer of size 2048, inserts 10 elements into the ring buffer, and
-get them until the buffer is empty.
+consume them until the buffer is empty.
 
 # Tests
 

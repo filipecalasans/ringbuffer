@@ -11,7 +11,8 @@ public:
    /*
    * Warning: Size must be multiple of 2.
    */
-   explicit RingBufferWrapper(uint32_t size);
+  explicit RingBufferWrapper(uint8_t* data, uint32_t len, bool deallocate = false); 
+  explicit RingBufferWrapper(uint32_t size);
    ~RingBufferWrapper();
 
    bool isValid();
@@ -37,7 +38,7 @@ private:
 
    RingBuffer buffer;
    bool valid;
-
+   bool deallocate;
 };
 
 #endif

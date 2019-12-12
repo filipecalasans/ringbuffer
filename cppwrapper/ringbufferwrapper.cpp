@@ -4,8 +4,21 @@
 #define NULL 0;
 #endif
 
-RingBufferWrapper::RingBufferWrapper(uint32_t size) :
-   valid(false)
+RingBufferWrapper::RingBufferWrapper(uint8_t* data, uint32_t len, bool deallocate)
+  : deallocate(deallocate)
+  , valid(false)
+{
+  valid = ringBufferInit(&buffer, data, len);
+  if(!valid && deallocate) {
+    delete[] data;
+    buffer.data = NULL;
+  }
+}
+
+
+RingBufferWrapper::RingBufferWrapper(uint32_t size)
+   : valid(false)
+   , deallocate(true)
 { 
    uint8_t *data = new uint8_t[size];
    valid = ringBufferInit(&buffer, data, size);
@@ -18,7 +31,7 @@ RingBufferWrapper::RingBufferWrapper(uint32_t size) :
 
 RingBufferWrapper::~RingBufferWrapper()
 {  
-   if(buffer.data) {
+   if(buffer.data && deallocate) {
       delete[] buffer.data;
    }
 }
