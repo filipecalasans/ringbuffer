@@ -81,7 +81,7 @@ void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len){
       memcpy(buffer->data, data + lenToTheEnd, lenFromBegin);
    }
    else {
-      memcpy(buffer->data, data, len);
+      memcpy(buffer->data + buffer->tail, data, len);
    }
    buffer->tail = (buffer->tail + len) & buffer->sizeMask;
 }
@@ -109,7 +109,7 @@ void ringBufferPeekMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len){
       memcpy(dst + lenToTheEnd, buffer->data, lenFromBegin);
    }
    else {
-      memcpy(dst, buffer->data, len);
+      memcpy(dst, buffer->data + buffer->head, len);
    }
 }
 
