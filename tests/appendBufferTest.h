@@ -1,8 +1,17 @@
 #ifndef __APPEND_BUFFER_TEST_H__
 #define __APPEND_BUFFER_TEST_H__
 
-#include <check.h>
+#include <stdint.h>
+#include <stddef.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <setjmp.h>
 
-Suite * append_buffer_suite(void);
+#include <cmocka.h>
+
+void Append_Element_No_Round(void** state);
+void Append_Element_Head_In_The_middle(void** state);
+void Append_Multiple_Elements_No_Round(void** state);
+void Append_Multiple_Elements_Head_In_The_middle(void** state);
 
 #endif

@@ -1,5 +1,9 @@
-#include <check.h>
-#include <stdlib.h>
+#include <stdint.h>
+#include <stddef.h>
+#include <stdarg.h>
+#include <setjmp.h>
+
+#include <cmocka.h>
 
 #include "../src/ringbuffer.h"
 
@@ -9,20 +13,24 @@
 
 int main(void)
 {
-    int number_failed;
-    Suite *s;
-    SRunner *sr;
+    const struct CMUnitTest tests[] = {
 
-    s = init_buffer_suite();
-    sr = srunner_create(s);
-    
-    srunner_add_suite(sr, append_buffer_suite());
-    srunner_add_suite(sr, get_buffer_suite());
+        // Init Buffer Test Cases.
+        cmocka_unit_test(Init_Buffer_Size_multiple_of_2),
+        cmocka_unit_test(Init_Buffer_Size_Not_multiple_of_2),
 
-    srunner_run_all(sr, CK_NORMAL);
-    number_failed = srunner_ntests_failed(sr);
-    srunner_free(sr);
+        // Get Test cases.
+        cmocka_unit_test(Peek_One_After_Multiple_Insertions),
+        cmocka_unit_test(Get_One_After_Multiple_Insertions),
+        cmocka_unit_test(Get_Multiple_After_Multiple_Insertions_No_Round),
+        cmocka_unit_test(Get_Multiple_After_Multiple_Insertions_Round),
 
+        // Append test cases.
+        cmocka_unit_test(Append_Element_No_Round),
+        cmocka_unit_test(Append_Element_Head_In_The_middle),
+        cmocka_unit_test(Append_Multiple_Elements_No_Round),
+        cmocka_unit_test(Append_Multiple_Elements_Head_In_The_middle),
+    };
 
-    return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
+    return cmocka_run_group_tests(tests, NULL, NULL);;
 }
