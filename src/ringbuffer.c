@@ -1,12 +1,13 @@
 #include "ringbuffer.h"
 
+#define NO_MEM_COPY
 #ifndef NO_MEM_COPY
 #include <string.h>
 #else
 #ifndef memcpy
-static void *memcpy(void *dst, const void *src, uint32_t n)
+static void *memcpy(void *dst, const void *src, size_t n)
 {  
-   uint32_t i = 0;
+   size_t i = 0;
    /* Verify if n, and the pointers are word aligned.
     * If it's word aligned copy by word.
     */
@@ -14,11 +15,11 @@ static void *memcpy(void *dst, const void *src, uint32_t n)
       (uintptr_t)src % sizeof(uint32_t) == 0 &&
       n % sizeof(uint32_t) == 0) {
 
-      uint32_t *d = dst;
-      const uint32_t *s = src;
+      uint32_t *d_word = dst;
+      const uint32_t *s_word = src;
 
       for (i=0; i<n/sizeof(uint32_t); i++) {
-         d[i] = s[i];
+         d_word[i] = s_word[i];
       }
    }
    else {

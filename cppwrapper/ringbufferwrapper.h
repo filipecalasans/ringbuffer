@@ -11,28 +11,28 @@ public:
    /*
    * Warning: Size must be multiple of 2.
    */
-  explicit RingBufferWrapper(uint8_t* data, uint32_t len, bool deallocate = false); 
-  explicit RingBufferWrapper(uint32_t size);
-   ~RingBufferWrapper();
+   explicit RingBufferWrapper(uint8_t* data, uint32_t len, bool deallocate = false) noexcept; 
+   explicit RingBufferWrapper(uint32_t size) noexcept;
+   virtual ~RingBufferWrapper() noexcept;
 
-   bool isValid();
+   bool isValid() noexcept;
 
-   bool empty();
-   uint32_t length();
-   uint32_t lengthAvailable();
-   uint32_t capacity();
+   bool empty() noexcept;
+   uint32_t length() noexcept;
+   uint32_t lengthAvailable() noexcept;
+   uint32_t capacity() noexcept;
 
-   bool appendOne(uint8_t data);
-   uint32_t appendMultiple(uint8_t *data, uint32_t len);
+   bool appendOne(uint8_t data) noexcept;
+   uint32_t appendMultiple(uint8_t *data, uint32_t len) noexcept;
 
-   uint8_t peekOne();
-   uint8_t getOne();
+   uint8_t peekOne() noexcept;
+   uint8_t getOne() noexcept;
 
-   uint32_t getMultiple(uint8_t *dst, uint32_t len);
-   uint32_t peekMultiple(uint8_t *dst, uint32_t len);
+   uint32_t getMultiple(uint8_t *dst, uint32_t len) noexcept;
+   uint32_t peekMultiple(uint8_t *dst, uint32_t len) noexcept;
 
-   uint32_t discardMultiple(uint32_t len);
-   void clear();   
+   uint32_t discardMultiple(uint32_t len) noexcept;
+   void clear() noexcept;
 
 private:
 
