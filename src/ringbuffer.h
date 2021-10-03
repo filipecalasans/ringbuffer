@@ -4,36 +4,58 @@
 // Uncomment if your platform does not have memcopy implementation.
 // #define NO_MEM_COPY
 
+#include <stddef.h>
 #include <stdint.h>
+
 
 #ifdef  __cplusplus
 extern  "C" {
 #endif
 
 typedef struct {
-   uint32_t tail;
-   uint32_t head;
-   uint32_t sizeMask;
+   size_t tail;
+   size_t head;
+   size_t sizeMask;
    uint8_t *data;
 }RingBuffer;
 
-int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len);
+// Init Data Structure.
+int ringBufferInit(RingBuffer *buffer, uint8_t *data, size_t len);
 
-uint32_t ringBufferLen(RingBuffer *buffer);
-uint8_t ringBufferEmpty(RingBuffer *buffer);
-uint32_t ringBufferLenAvailable(RingBuffer *buffer);
-uint32_t ringBufferMaxSize(RingBuffer *buffer);
+// Returns ring buffer len.
+size_t ringBufferLen(const RingBuffer *buffer);
 
+// Returns whether the ringbuferr is empty.
+uint8_t ringBufferEmpty(const RingBuffer *buffer);
+
+// Available space left in the ringbuffer.
+size_t ringBufferLenAvailable(const RingBuffer *buffer);
+
+// Maximum number of bytes this ring buffer can store.
+size_t ringBufferMaxSize(const RingBuffer *buffer);
+
+// Append one byte to the buffer.
 void ringBufferAppendOne(RingBuffer *buffer, uint8_t data);
-void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len);
 
-uint8_t ringBufferPeekOne(RingBuffer *buffer);
+// Append multiple bytest to the buffer.
+void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, size_t len);
+
+// Return the first element but don't remove it.
+uint8_t ringBufferPeekOne(const RingBuffer *buffer);
+
+// Return the first element and remove it from the buffer.
 uint8_t ringBufferGetOne(RingBuffer *buffer);
 
-void ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
-void ringBufferPeekMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len);
+// Return len number of bytes from the ring buffer.
+void ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, size_t len);
 
-void ringBufferDiscardMultiple(RingBuffer *buffer, uint32_t len);
+// Return len number of bytes without removing from the buffer.
+void ringBufferPeekMultiple(const RingBuffer *buffer, uint8_t *dst, size_t len);
+
+// Discard len bytes from the buffer.
+void ringBufferDiscardMultiple(RingBuffer *buffer, size_t len);
+
+// Clean the buffer to th initial state.
 void ringBufferClear(RingBuffer *buffer);
 
 #ifdef  __cplusplus

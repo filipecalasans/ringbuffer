@@ -36,7 +36,7 @@ static void *memcpy(void *dst, const void *src, uint32_t n)
 #endif
 #endif
 
-int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len) {
+int ringBufferInit(RingBuffer *buffer, uint8_t *data, size_t len) {
    if(!(len && !(len & (len - 1)))) {
       return 0;
    }
@@ -48,7 +48,7 @@ int ringBufferInit(RingBuffer *buffer, uint8_t *data, uint32_t len) {
    return 1;
 }
 
-uint32_t ringBufferLen(RingBuffer *buffer) {
+size_t ringBufferLen(const RingBuffer *buffer) {
    if(buffer->tail >= buffer->head) {
       return buffer->tail-buffer->head;
    }
@@ -56,15 +56,15 @@ uint32_t ringBufferLen(RingBuffer *buffer) {
    return buffer->sizeMask-(buffer->head-buffer->tail)+1;
 }
 
-uint8_t ringBufferEmpty(RingBuffer *buffer) {
+uint8_t ringBufferEmpty(const RingBuffer *buffer) {
    return (buffer->tail == buffer->head);
 }
 
-uint32_t ringBufferLenAvailable(RingBuffer *buffer){
+size_t ringBufferLenAvailable(const RingBuffer *buffer){
    return buffer->sizeMask - ringBufferLen(buffer);
 }
 
-uint32_t ringBufferMaxSize(RingBuffer *buffer) {
+size_t ringBufferMaxSize(const RingBuffer *buffer) {
    return buffer->sizeMask;
 }
 
@@ -73,7 +73,7 @@ void ringBufferAppendOne(RingBuffer *buffer, uint8_t data){
    buffer->tail = (buffer->tail + 1) & buffer->sizeMask;
 }
 
-void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len){
+void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, size_t len){
    if(buffer->tail + len > buffer->sizeMask) {
       uint32_t lenToTheEnd = buffer->sizeMask - buffer->tail + 1;
       uint32_t lenFromBegin = len - lenToTheEnd;
@@ -86,7 +86,7 @@ void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, uint32_t len){
    buffer->tail = (buffer->tail + len) & buffer->sizeMask;
 }
 
-uint8_t ringBufferPeekOne(RingBuffer *buffer){
+uint8_t ringBufferPeekOne(const RingBuffer *buffer){
    return buffer->data[buffer->head];
 }
 
@@ -96,12 +96,12 @@ uint8_t ringBufferGetOne(RingBuffer *buffer){
    return data;
 }
 
-void ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len) {
+void ringBufferGetMultiple(RingBuffer *buffer, uint8_t *dst, size_t len) {
    ringBufferPeekMultiple(buffer, dst, len);
    buffer->head = (buffer->head + len) & buffer->sizeMask;
 }
 
-void ringBufferPeekMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len){
+void ringBufferPeekMultiple(const RingBuffer *buffer, uint8_t *dst, size_t len){
    if(buffer->head + len > buffer->sizeMask) {
       uint32_t lenToTheEnd = buffer->sizeMask - buffer->head + 1;
       uint32_t lenFromBegin = len - lenToTheEnd;
@@ -113,7 +113,7 @@ void ringBufferPeekMultiple(RingBuffer *buffer, uint8_t *dst, uint32_t len){
    }
 }
 
-void ringBufferDiscardMultiple(RingBuffer *buffer, uint32_t len){
+void ringBufferDiscardMultiple(RingBuffer *buffer, size_t len){
    buffer->head = (buffer->head + len) + buffer->sizeMask;
 }
 

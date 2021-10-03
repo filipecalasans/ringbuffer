@@ -10,5 +10,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 add_subdirectory(src)
 add_subdirectory(cppwrapper)
-add_subdirectory(third-party/cmocka)
-add_subdirectory(tests)
+
+if (WITH_TEST)
+    add_subdirectory(third-party/cmocka)
+    add_subdirectory(tests)
+endif(WITH_TEST)
