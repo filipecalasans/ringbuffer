@@ -60,13 +60,13 @@ T RingBufferWrapper::peek_as(bool* ok) noexcept
       return data;
    }
 
-   if (this->length() < sizeof(T))
+   if (length() < sizeof(T))
    {
       *ok = false;
       return data;
    }
 
-   size_t len = this->peekMultiple(static_cast<uint8_t*>(&data), sizeof(T));
+   size_t len = peekMultiple(static_cast<uint8_t*>(&data), sizeof(T));
    /* 
     * This should be always true because we verified the
     * buffer length before reading.
@@ -78,9 +78,9 @@ T RingBufferWrapper::peek_as(bool* ok) noexcept
 template<typename T>
 T RingBufferWrapper::get_as(bool* ok) noexcept
 {  
-   T data = this->peek_as<T>(ok);
+   T data = peek_as<T>(ok);
    if (*ok) {
-      this->discardMultiple(sizeof(T));
+      discardMultiple(sizeof(T));
    }
    return data;
 }
