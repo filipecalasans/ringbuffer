@@ -6,26 +6,28 @@
 #define NULL 0;
 #endif
 
-RingBufferWrapper::RingBufferWrapper(uint8_t* data, uint32_t len, bool deallocate) noexcept
-  : deallocate(deallocate)
-  , valid(false)
+RingBufferWrapper::RingBufferWrapper(uint8_t* data, uint32_t len) noexcept
+   : valid(false)
 {  
    if (!isMultipleTwo(len)) {
       valid = false;
-      return;
+      goto error;
    }
 
    valid = ringBufferInit(&buffer, data, len);
-   if (!valid && deallocate) {
-      delete[] data;
-      buffer.data = NULL;
+   if (!valid) {
+      goto error;
    }
+   return;
+
+error:
+   delete[] data;
+   buffer.data = NULL;
 }
 
 
 RingBufferWrapper::RingBufferWrapper(uint32_t size) noexcept
    : valid(false)
-   , deallocate(true)
 { 
    if (!isMultipleTwo(size)) {
       return;
@@ -42,7 +44,7 @@ RingBufferWrapper::RingBufferWrapper(uint32_t size) noexcept
 
 RingBufferWrapper::~RingBufferWrapper() noexcept
 {  
-   if (buffer.data && deallocate) {
+   if (buffer.data != NULL) {
       delete[] buffer.data;
    }
 }

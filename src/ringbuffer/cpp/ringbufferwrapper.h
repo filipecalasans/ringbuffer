@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <type_traits>
 
-#include "../src/ringbuffer.h"
+#include <ringbuffer/c/ringbuffer.h>
 
 class RingBufferWrapper {
 
@@ -13,7 +13,7 @@ public:
    /*
    * Warning: Size must be multiple of 2.
    */
-   explicit RingBufferWrapper(uint8_t* data, uint32_t len, bool deallocate = false) noexcept; 
+   explicit RingBufferWrapper(uint8_t* data, uint32_t len) noexcept; 
    explicit RingBufferWrapper(uint32_t size) noexcept;
    virtual ~RingBufferWrapper() noexcept;
 
@@ -46,7 +46,6 @@ private:
 
    RingBuffer buffer;
    bool valid;
-   bool deallocate;
 };
 
 template<typename T>

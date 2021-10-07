@@ -5,8 +5,6 @@
 
 #include <cmocka.h>
 
-#include "../src/ringbuffer.h"
-
 #include "initBufferTest.h"
 #include "appendBufferTest.h"
 #include "getBufferTest.h"

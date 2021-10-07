@@ -1,6 +1,6 @@
 #include "appendBufferTest.h"
 
-#include "../src/ringbuffer.h"
+#include <ringbuffer/c/ringbuffer.h>
 
 #define BUFFER_SIZE 128
 
