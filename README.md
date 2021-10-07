@@ -2,17 +2,29 @@
 
 Static size Ring Buffer implementation in C with minimal dependencies and tailored to be fast and have small footprint.
 
-This library privileges performance over safety, therefore we do not make safety checks before manipulating the buffer, nor we raise exceptions in the C++ wrappers. This library is useful for applications such as packet queue, I/O queue, embedded applications.
+This library privileges performance over safety, therefore we do not make safety checks before manipulating the buffer in the C implementation, and very minimal on C++ wrapper. Also, the implemenation is meant to be used on embedded devices, bare-metal if required and therefore it won't raise exceptions. This library is useful for applications such as packet queue, I/O queue, embedded applications that needs to stream real time acquired data.
 
-# Exampels
+# How to Use:
 
-You can include the files **ringbuffer.{c,h}** into your project and you should be ready to go.
+You can import this repo as a submodule in your project, and add the project subdirectory to your build and link to the following static library targets:
 
-## Using RingBuffer in C
+```
+add_subdirectory(your/project/third-party/ringbuffer)
 
+# C library
+target_link_libraries(your_target_name c_ringbuffer cmocka::cmocka)
+
+# C++ library
+target_link_libraries(your_cpp_target_name cpp_ringbuffer)
+```
+
+Or you can copy only the directory `ringbuffer`, and add the source and headers to
+your build definition.
+
+## Using the RingBuffer C library
 
 ```C
-   #include "ringbuffer.h"
+   #include <ringbuffer/c/ringbuffer.h>
 
    #define STATIC_BUFFER_SIZE 512
 
@@ -47,15 +59,15 @@ If you are working in a memory constrained environment, you may want to
 use statically allocated memory as internal data buffer, as we show in the example above.
 
 However, you are not doomed to this approach. The library is flexible to allow
-you to use dynamically allocated memory.
+you to use dynamically allocated memory if you want.
 
-## Using Ring Buffer in C++
+## Using the C++ RingBuffer library
 
 You can find the **RingBufferWrapper** implementation in the folder **cppwrappers**. It provides a C++ class wrappers for the C implementation.
 
 
 ```C++
-#include "ringbufferwrapper.h"
+#include <ringbuffer/cpp/ringbufferwrapper.h>
 
 #include <iostream>
 
@@ -103,16 +115,13 @@ consume them until the buffer is empty.
 
 # Tests
 
-The C library was unit tested using [libcheck](https://libcheck.github.io/check/web/install.html). If you are using Ubuntu you can install the library as follow:
+The C library was unit tested using [CMocka](https://github.com/clibs/cmocka), providing as a submodule. Tests are automatically compiled and you can run them from the build output directory as follow:
 
-### Ubuntu 
-
-```sh
-$ apt-get install check
 ```
+# Compile
+$ ./build.sh
 
-The Unit Test modules are provided in the folder *tests*. To compile an run the tests, you can execute the following sequence of commands inside the directory **tests**:
-
-```sh
-$ make && ./test
+# Run
+$ cd out/
+$ tests/c_ringbuffer_test
 ```
