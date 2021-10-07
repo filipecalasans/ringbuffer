@@ -29,7 +29,7 @@ size_t ringBufferLen(const RingBuffer *buffer);
 uint8_t ringBufferEmpty(const RingBuffer *buffer);
 
 // Available space left in the ringbuffer.
-size_t ringBufferLenAvailable(const RingBuffer *buffer);
+size_t ringBufferFreeSpace(const RingBuffer *buffer);
 
 // Maximum number of bytes this ring buffer can store.
 size_t ringBufferMaxSize(const RingBuffer *buffer);
@@ -57,6 +57,15 @@ void ringBufferDiscardMultiple(RingBuffer *buffer, size_t len);
 
 // Clean the buffer to th initial state.
 void ringBufferClear(RingBuffer *buffer);
+
+static inline int isMultipleTwo(size_t len)
+{
+   if(!(len && !(len & (len - 1)))) {
+      return 0;
+   } else {
+      return 1;
+   }
+}
 
 #ifdef  __cplusplus
       }

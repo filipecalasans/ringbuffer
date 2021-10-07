@@ -38,7 +38,7 @@ static void *memcpy(void *dst, const void *src, size_t n)
 #endif
 
 int ringBufferInit(RingBuffer *buffer, uint8_t *data, size_t len) {
-   if(!(len && !(len & (len - 1)))) {
+   if(!isMultipleTwo(len)) {
       return 0;
    }
 
@@ -61,7 +61,7 @@ uint8_t ringBufferEmpty(const RingBuffer *buffer) {
    return (buffer->tail == buffer->head);
 }
 
-size_t ringBufferLenAvailable(const RingBuffer *buffer){
+size_t ringBufferFreeSpace(const RingBuffer *buffer){
    return buffer->sizeMask - ringBufferLen(buffer);
 }
 

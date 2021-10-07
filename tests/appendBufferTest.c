@@ -18,7 +18,7 @@ void Append_Element_No_Round(void** state)
    }
 
    for(uint8_t i=0; i<BUFFER_SIZE-1; i++) {
-        assert_int_equal(ringBufferLenAvailable(&buffer), BUFFER_SIZE-i-1);
+        assert_int_equal(ringBufferFreeSpace(&buffer), BUFFER_SIZE-i-1);
         ringBufferAppendOne(&buffer, elements[i]);
         assert_int_equal(ringBufferLen(&buffer), i+1);
    }
@@ -45,7 +45,7 @@ void Append_Element_Head_In_The_middle(void** state)
    }
 
    for(uint8_t i=0; i<BUFFER_SIZE-1; i++) {
-      assert_int_equal(ringBufferLenAvailable(&buffer), BUFFER_SIZE-i-1);        
+      assert_int_equal(ringBufferFreeSpace(&buffer), BUFFER_SIZE-i-1);        
       ringBufferAppendOne(&buffer, elements[i]);
       assert_int_equal(ringBufferLen(&buffer), i+1);
    }
@@ -72,7 +72,7 @@ void Append_Multiple_Elements_No_Round(void** state)
         assert_int_equal(elements[i], i);
    }
 
-   assert_int_equal(ringBufferLenAvailable(&buffer), BUFFER_SIZE-1);
+   assert_int_equal(ringBufferFreeSpace(&buffer), BUFFER_SIZE-1);
    ringBufferAppendMultiple(&buffer, elements, BUFFER_SIZE-1);
    assert_int_equal(ringBufferLen(&buffer), BUFFER_SIZE-1);
 
@@ -102,7 +102,7 @@ void Append_Multiple_Elements_Head_In_The_middle(void** state)
         assert_int_equal(elements[i], i);
    }
    
-   assert_int_equal(ringBufferLenAvailable(&buffer), BUFFER_SIZE-1);
+   assert_int_equal(ringBufferFreeSpace(&buffer), BUFFER_SIZE-1);
    ringBufferAppendMultiple(&buffer, elements, BUFFER_SIZE-1);
    assert_int_equal(ringBufferLen(&buffer), BUFFER_SIZE-1);
 

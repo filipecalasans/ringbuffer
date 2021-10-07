@@ -34,7 +34,7 @@ You can include the files **ringbuffer.{c,h}** into your project and you should 
       // You can discard multiples
       ringBufferDiscardMultiple(&buffer, 2);
       
-      uint32_t freeSpace = ringBufferLenAvailable(&buffer)l
+      uint32_t freeSpace = ringBufferFreeSpace(&buffer)l
       uint32_t size = ringBufferLen(&buffer);
       uint32_t capacity = ringBufferLen(&buffer); 
 
@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
    uint32_t len = ringBuffer.appendMultiple(values, ADD_SIZE);
    std::cout << "Inserted: " << len << ", Tryied: " 
              << ADD_SIZE << ", Len Read: " << ringBuffer.length() 
-             << " Len Available: " << ringBuffer.lengthAvailable() << "\n";
+             << " Len Available: " << ringBuffer.freeSpace() << "\n";
 
    std::cout << "Array Values: ";
 
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
    std::cout << "\n";
 
    std::cout << "Len Read: " << ringBuffer.length() 
-             << " Len Available: " << ringBuffer.lengthAvailable() << "\n";
+             << " Len Available: " << ringBuffer.freeSpace() << "\n";
 
    return 0;
 }

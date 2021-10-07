@@ -2,6 +2,8 @@
 #define __RING_BUFFER_WRAPPER_H__
 
 #include <stdint.h>
+#include <type_traits>
+
 #include "../src/ringbuffer.h"
 
 class RingBufferWrapper {
@@ -18,21 +20,27 @@ public:
    bool isValid() noexcept;
 
    bool empty() noexcept;
-   uint32_t length() noexcept;
-   uint32_t lengthAvailable() noexcept;
-   uint32_t capacity() noexcept;
+   size_t length() noexcept;
+   size_t freeSpace() noexcept;
+   size_t capacity() noexcept;
 
-   bool appendOne(uint8_t data) noexcept;
-   uint32_t appendMultiple(uint8_t *data, uint32_t len) noexcept;
+   size_t appendOne(uint8_t data) noexcept;
+   size_t appendMultiple(uint8_t *data, size_t len) noexcept;
 
-   uint8_t peekOne() noexcept;
-   uint8_t getOne() noexcept;
+   size_t peekOne(uint8_t* data) noexcept;
+   size_t getOne(uint8_t* data) noexcept;
 
-   uint32_t getMultiple(uint8_t *dst, uint32_t len) noexcept;
-   uint32_t peekMultiple(uint8_t *dst, uint32_t len) noexcept;
+   size_t getMultiple(uint8_t *dst, size_t len) noexcept;
+   size_t peekMultiple(uint8_t *dst, size_t len) noexcept;
 
-   uint32_t discardMultiple(uint32_t len) noexcept;
-   void clear() noexcept;
+   size_t discardMultiple(size_t len) noexcept;
+   void clean() noexcept;
+
+   template<typename T>
+   T get_as(bool* ok) noexcept;
+
+   template<typename T>
+   T peek_as(bool* ok) noexcept;
 
 private:
 
@@ -40,5 +48,42 @@ private:
    bool valid;
    bool deallocate;
 };
+
+template<typename T>
+T RingBufferWrapper::peek_as(bool* ok) noexcept 
+{
+   T data;
+   // Only POD types can be trivially copied from
+   // the ring buffer.
+   if (!std::is_pod<T>::value) {
+      *ok = false;
+      return data;
+   }
+
+   if (this->length() < sizeof(T))
+   {
+      *ok = false;
+      return data;
+   }
+
+   size_t len = this->peekMultiple(static_cast<uint8_t*>(&data), sizeof(T));
+   /* 
+    * This should be always true because we verified the
+    * buffer length before reading.
+    */ 
+   *ok = len == sizeof(T);
+   return data;
+}
+
+template<typename T>
+T RingBufferWrapper::get_as(bool* ok) noexcept
+{  
+   T data = this->peek_as<T>(ok);
+   if (*ok) {
+      this->discardMultiple(sizeof(T));
+   }
+   return data;
+}
+   
 
 #endif

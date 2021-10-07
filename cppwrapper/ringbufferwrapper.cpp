@@ -1,5 +1,7 @@
 #include "ringbufferwrapper.h"
 
+#include <algorithm>
+
 #ifndef NULL
 #define NULL 0;
 #endif
@@ -7,12 +9,17 @@
 RingBufferWrapper::RingBufferWrapper(uint8_t* data, uint32_t len, bool deallocate) noexcept
   : deallocate(deallocate)
   , valid(false)
-{
-  valid = ringBufferInit(&buffer, data, len);
-  if(!valid && deallocate) {
-    delete[] data;
-    buffer.data = NULL;
-  }
+{  
+   if (!isMultipleTwo(len)) {
+      valid = false;
+      return;
+   }
+
+   valid = ringBufferInit(&buffer, data, len);
+   if (!valid && deallocate) {
+      delete[] data;
+      buffer.data = NULL;
+   }
 }
 
 
@@ -20,10 +27,14 @@ RingBufferWrapper::RingBufferWrapper(uint32_t size) noexcept
    : valid(false)
    , deallocate(true)
 { 
+   if (!isMultipleTwo(size)) {
+      return;
+   }
+
    uint8_t *data = new uint8_t[size];
    valid = ringBufferInit(&buffer, data, size);
 
-   if(!valid) { 
+   if (!valid) { 
       delete[] data;
       buffer.data = NULL;
    }
@@ -31,7 +42,7 @@ RingBufferWrapper::RingBufferWrapper(uint32_t size) noexcept
 
 RingBufferWrapper::~RingBufferWrapper() noexcept
 {  
-   if(buffer.data && deallocate) {
+   if (buffer.data && deallocate) {
       delete[] buffer.data;
    }
 }
@@ -46,95 +57,74 @@ bool RingBufferWrapper::empty() noexcept
    return ringBufferEmpty(&buffer);
 }
 
-uint32_t RingBufferWrapper::length() noexcept
+size_t RingBufferWrapper::length() noexcept
 {
    return ringBufferLen(&buffer);
 }
 
-uint32_t RingBufferWrapper::lengthAvailable() noexcept
+size_t RingBufferWrapper::freeSpace() noexcept
 {
-   return ringBufferLenAvailable(&buffer);
+   return ringBufferFreeSpace(&buffer);
 }
 
-uint32_t RingBufferWrapper::capacity() noexcept
+size_t RingBufferWrapper::capacity() noexcept
 {
    return ringBufferMaxSize(&buffer);
 }
 
-bool RingBufferWrapper::appendOne(uint8_t data) noexcept
-{
-   if(length() < capacity()) {
-      ringBufferAppendOne(&buffer, data);
-      return true;
-   }
-   return false;
+size_t RingBufferWrapper::appendOne(uint8_t data) noexcept
+{  
+   return appendMultiple(&data, 1);
 }
 
-uint32_t RingBufferWrapper::appendMultiple(uint8_t *data, uint32_t len) noexcept
+size_t RingBufferWrapper::appendMultiple(uint8_t *data, size_t len) noexcept
 {
-   uint32_t freeSpace = lengthAvailable();
-   if(freeSpace == 0) { return 0; }
-
-   if(len > freeSpace) {
-      len = freeSpace;
-   }
-
+   len = std::min(len, freeSpace());
    ringBufferAppendMultiple(&buffer, data, len);
    return len;
 }
 
-uint8_t RingBufferWrapper::peekOne() noexcept
+size_t RingBufferWrapper::peekOne(uint8_t* data) noexcept
 {
-   if(!length()) { return 0; }
-   return ringBufferPeekOne(&buffer);
+   return peekMultiple(data, 1);
 }
 
-uint8_t RingBufferWrapper::getOne() noexcept
+size_t RingBufferWrapper::getOne(uint8_t* data) noexcept
 {
-   if(!length()) { return 0; }
-   return ringBufferGetOne(&buffer);
+   return getMultiple(data, 1);
 }
 
-uint32_t RingBufferWrapper::getMultiple(uint8_t *dst, uint32_t len) noexcept
-{
-   uint32_t currentLen = length();
-   if(currentLen == 0) { return 0; }
-
-   if(len > currentLen) {
-      len = currentLen;
+size_t RingBufferWrapper::getMultiple(uint8_t *dst, size_t len) noexcept
+{  
+   len = std::min(len, length());
+   if (len == 0) { 
+      return 0; 
    }
-
    ringBufferGetMultiple(&buffer, dst, len);
    return len; 
 }
 
-uint32_t RingBufferWrapper::peekMultiple(uint8_t *dst, uint32_t len) noexcept
+size_t RingBufferWrapper::peekMultiple(uint8_t *dst, size_t len) noexcept
 {
-   uint32_t currentLen = length();
-   if(currentLen == 0) { return 0; }
-
-   if(len > currentLen) {
-      len = currentLen;
+   len = std::min(len, length());
+   if (len == 0) { 
+      return 0; 
    }
-
    ringBufferPeekMultiple(&buffer, dst, len);
    return len; 
 }
 
-uint32_t RingBufferWrapper::discardMultiple(uint32_t len) noexcept
+size_t RingBufferWrapper::discardMultiple(size_t len) noexcept
 {  
-   uint32_t currentLen = length();
-   if(currentLen == 0) { return 0; }
-
-   if(len > currentLen) {
-      len = currentLen;
+   len = std::min(len, length());
+   if (len == 0) { 
+      return 0; 
    }
-
    ringBufferDiscardMultiple(&buffer, len);
    return len;
 }
 
-void RingBufferWrapper::clear() noexcept
+void RingBufferWrapper::clean() noexcept
 {
    ringBufferClear(&buffer);
 }
