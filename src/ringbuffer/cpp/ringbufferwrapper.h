@@ -42,6 +42,9 @@ public:
    template<typename T>
    T peek_as(bool* ok) noexcept;
 
+   template<typename T>
+   size_t numElements() noexcept;
+
 private:
 
    RingBuffer buffer;
@@ -82,6 +85,12 @@ T RingBufferWrapper::get_as(bool* ok) noexcept
       discardMultiple(sizeof(T));
    }
    return data;
+}
+
+template<typename T>
+size_t RingBufferWrapper::numElements() noexcept
+{  
+   return length() / sizeof(T);
 }
    
 
