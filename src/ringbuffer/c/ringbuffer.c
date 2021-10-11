@@ -115,7 +115,7 @@ void ringBufferPeekMultiple(const RingBuffer *buffer, uint8_t *dst, size_t len){
 }
 
 void ringBufferDiscardMultiple(RingBuffer *buffer, size_t len){
-   buffer->head = (buffer->head + len) + buffer->sizeMask;
+   buffer->head = (buffer->head + len) & buffer->sizeMask;
 }
 
 void ringBufferClear(RingBuffer *buffer){
