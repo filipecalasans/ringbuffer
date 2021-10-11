@@ -38,7 +38,7 @@ size_t ringBufferMaxSize(const RingBuffer *buffer);
 void ringBufferAppendOne(RingBuffer *buffer, uint8_t data);
 
 // Append multiple bytest to the buffer.
-void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, size_t len);
+void ringBufferAppendMultiple(RingBuffer *buffer, const uint8_t *data, size_t len);
 
 // Return the first element but don't remove it.
 uint8_t ringBufferPeekOne(const RingBuffer *buffer);

@@ -74,7 +74,7 @@ void ringBufferAppendOne(RingBuffer *buffer, uint8_t data){
    buffer->tail = (buffer->tail + 1) & buffer->sizeMask;
 }
 
-void ringBufferAppendMultiple(RingBuffer *buffer, uint8_t *data, size_t len){
+void ringBufferAppendMultiple(RingBuffer *buffer, const uint8_t *data, size_t len){
    if(buffer->tail + len > buffer->sizeMask) {
       uint32_t lenToTheEnd = buffer->sizeMask - buffer->tail + 1;
       uint32_t lenFromBegin = len - lenToTheEnd;

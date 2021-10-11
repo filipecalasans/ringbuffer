@@ -25,7 +25,7 @@ public:
    size_t capacity() noexcept;
 
    size_t appendOne(uint8_t data) noexcept;
-   size_t appendMultiple(uint8_t *data, size_t len) noexcept;
+   size_t appendMultiple(const uint8_t *data, size_t len) noexcept;
 
    size_t peekOne(uint8_t* data) noexcept;
    size_t getOne(uint8_t* data) noexcept;

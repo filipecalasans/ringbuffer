@@ -79,7 +79,7 @@ size_t RingBufferWrapper::appendOne(uint8_t data) noexcept
    return appendMultiple(&data, 1);
 }
 
-size_t RingBufferWrapper::appendMultiple(uint8_t *data, size_t len) noexcept
+size_t RingBufferWrapper::appendMultiple(const uint8_t *data, size_t len) noexcept
 {
    len = std::min(len, freeSpace());
    ringBufferAppendMultiple(&buffer, data, len);
