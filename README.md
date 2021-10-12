@@ -6,13 +6,13 @@ This library privileges performance over safety, therefore we do not make safety
 
 # How to Use:
 
-You can import this repo as a submodule in your project, and add the project subdirectory to your build and link to the following static library targets:
+You can import this repo as a submodule in your project, add the project subdirectory to your CMake defintiion and link to the following libraries:
 
 ```
 add_subdirectory(your/project/third-party/ringbuffer)
 
 # C library
-target_link_libraries(your_target_name c_ringbuffer cmocka::cmocka)
+target_link_libraries(your_target_name c_ringbuffer)
 
 # C++ library
 target_link_libraries(your_cpp_target_name cpp_ringbuffer)
@@ -63,8 +63,7 @@ you to use dynamically allocated memory if you want.
 
 ## Using the C++ RingBuffer library
 
-You can find the **RingBufferWrapper** implementation in the folder **cppwrappers**. It provides a C++ class wrappers for the C implementation.
-
+You can find the **RingBufferWrapper** implementation in the folder **src/ringbuffer/cpp/**. It provides a C++ class wrapper for the C implementation.
 
 ```C++
 #include <ringbuffer/cpp/ringbufferwrapper.h>
