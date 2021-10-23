@@ -114,7 +114,7 @@ consume them until the buffer is empty.
 
 # Tests
 
-The C library was unit tested using [CMocka](https://github.com/clibs/cmocka), providing as a submodule. Tests are automatically compiled and you can run them from the build output directory as follow:
+The C library was unit tested using [CMocka](https://github.com/clibs/cmocka), which is provided as a submodule. Tests are automatically compiled and you can run them from the build output directory as follow:
 
 ```
 # Compile
